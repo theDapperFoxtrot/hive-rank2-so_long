@@ -23,7 +23,6 @@ $(NAME): $(OBJ)
 clean:
 	$(MAKE) -C libft clean
 	rm -f $(OBJ)
-	rm -fr $(LIBMLX)/build
 
 fclean: clean
 	$(MAKE) -C libft fclean

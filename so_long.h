@@ -10,6 +10,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define BUFFER_SIZE 32
 
 typedef struct  s_data
 {
