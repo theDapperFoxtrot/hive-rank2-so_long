@@ -119,30 +119,3 @@ int32_t	main(int argc, char **argv)
 	free_split(game.map); // Free map array
 	return (0);
 }
-
-	// Parse the map
-	// Validate the map
-	// Initialize the game
-
-
-	// mlx_t *mlx;
-	// mlx_image_t *image;
-	// // Initialize the mlx window
-	// mlx = mlx_init(WIDTH, HEIGHT, "so_long", true);
-	// if (!mlx)
-	// 	handle_error("Failed to initialize mlx\n");
-	// // Create a new image
-	// image = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// if (!image)
-	// 	handle_error("Failed to create image\n");
-	// // Set a pixel to red (0xFF0000FF = RGBA format: Red)
-	// mlx_put_pixel(image, 0, 0, 0xFF0000FF);
-	// // Put the image on the window
-	// if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	// 	handle_error("Failed to put image on window\n");
-	// // Start the event loop
-	// mlx_loop(mlx);
-	// // Clean up and close
-	// mlx_terminate(mlx);
-// 	return (0);
-// }
