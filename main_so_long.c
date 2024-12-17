@@ -1,10 +1,7 @@
 #include "so_long.h"
 
-
-
-	#include <stdio.h>
-	#include <string.h>
-
+	// #include <stdio.h>
+	// #include <string.h>
 
 static void	handle_error(char *message, char **freedom_seekers, char *freedom_seeker)
 {
@@ -65,28 +62,21 @@ static char **read_map(char *filename, int *width, int *height)
     line = NULL;
     *height = 0;
     *width = 0;
-
-    // First pass to determine the height and width of the map
     while (get_next_valid_line(fd, &line) && *line)
     {
         if (*height == 0)
             *width = ft_strlen(line);
         (*height)++;
         free(line);
-        line = NULL; // Reset line to NULL for the next iteration
+        line = NULL;
     }
     close(fd);
-
-    // Allocate memory for the map
     map = (char **)malloc(sizeof(char *) * (*height + 1));
     if (!map)
         handle_error("Failed to allocate memory\n", NULL, NULL);
-
-    // Reopen file to populate map
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         handle_error("Failed to open file\n", map, NULL);
-
     i = 0;
     while (i < *height)
     {
@@ -94,14 +84,14 @@ static char **read_map(char *filename, int *width, int *height)
         map[i] = ft_strdup(line);
         if (!map[i])
         {
-            free_split(map); // Clean up allocated rows
+            free_split(map);
             handle_error("Failed to allocate memory for map\n", NULL, line);
         }
         free(line);
-        line = NULL; // Reset line to NULL for the next iteration
+        line = NULL;
         i++;
     }
-	map[i] = NULL; // Null-terminate the map array
+	map[i] = NULL;
     close(fd);
     return (map);
 }
@@ -109,26 +99,26 @@ static char **read_map(char *filename, int *width, int *height)
 int32_t	main(int argc, char **argv)
 {
 	t_game	game;
-	int		i;
-	int		j;
+	// int		i;
+	// int		j;
 
 	if (argc != 2)
 		handle_error("Usage: ./so_long [map.ber]\n", NULL, NULL);
 	// Read the map
 	game.map = read_map(argv[1], &game.width, &game.height);
-	i = 0;
-	while (i < game.height)
-	{
-		j = 0;
-		while (game.map[i][j])
-		{
-			printf("bytes[%d]: %ld byte(s)\n", j, sizeof(game.map[i][j]));
-			j++;
-		}
-		printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
-		i++;
-	}
-	printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
+	// i = 0;
+	// while (i < game.height)
+	// {
+	// 	j = 0;
+	// 	while (game.map[i][j])
+	// 	{
+	// 		printf("bytes[%d]: %ld byte(s)\n", j, sizeof(game.map[i][j]));
+	// 		j++;
+	// 	}
+	// 	printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
+	// 	i++;
+	// }
+	// printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
 	free_split(game.map); // Free map array
 	return (0);
 }
