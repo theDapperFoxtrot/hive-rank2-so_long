@@ -3,6 +3,7 @@
 
 
 	#include <stdio.h>
+	#include <string.h>
 
 
 static void	handle_error(char *message, char **freedom_seekers, char *freedom_seeker)
@@ -32,9 +33,6 @@ static void	*get_next_valid_line(int fd, char **line)
 	buffer = (char *)malloc(2);
 	if (!buffer)
 		handle_error("Failed to allocate buffer memory\n", NULL, NULL);
-	*line = ft_strdup("");
-	if (!*line)
-		handle_error("Failed to allocate *line strdup memory\n", NULL, NULL);
 	while ((bytes_read = read(fd, buffer, 1)) > 0)
 	{
 		if (bytes_read)
@@ -44,7 +42,7 @@ static void	*get_next_valid_line(int fd, char **line)
 		if (!valid_character(buffer[0]))
 		{
 			free(buffer);
-			handle_error("Invalid character in map\n", NULL, NULL);
+			handle_error("Invalid character in map\n", NULL, *line);
 		}
 		temp = ft_strjoin(*line, buffer);
 		free(*line);
@@ -54,57 +52,65 @@ static void	*get_next_valid_line(int fd, char **line)
 	return (*line);
 }
 
-static char	**read_map(char *filename, int *width, int *height)
+static char **read_map(char *filename, int *width, int *height)
 {
-	int		fd;
-	char	*line;
-	char	**map;
-	int		i;
+    int fd;
+    char *line;
+    char **map;
+    int i;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		handle_error("Failed to open file\n", NULL, NULL);
-	line = NULL;
-	*height = 0;
-	while (get_next_valid_line(fd, &line) && *line)
-	{
-		if (*height == 0)
-			*width = ft_strlen(line);
-		(*height)++;
-		free(line);
-	}
-	printf("height: %d\n", *height);
-	close(fd);
-	// Allocate memory for the map
-	map = (char **)malloc(sizeof(char *) * (*height));
-	if (!map)
-		handle_error("Failed to allocate memory\n", NULL, NULL);
-	// Reopen file to populate map
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		handle_error("Failed to open file\n", map, NULL);
-	i = 0;
-	while (i < *height)
-	{
-		get_next_valid_line(fd, &line);
-		map[i] = ft_strdup(line);
-		if (!map[i])
-		{
-			free_split(map); // Clean up allocated rows
-			handle_error("Failed to allocate memory for map\n", NULL, line);
-		}
-		free(line);
-		i++;
-	}
-	map[i] = NULL; // Null-terminate map
-	close(fd);
-	return (map);
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        handle_error("Failed to open file\n", NULL, NULL);
+    line = NULL;
+    *height = 0;
+    *width = 0;
+
+    // First pass to determine the height and width of the map
+    while (get_next_valid_line(fd, &line) && *line)
+    {
+        if (*height == 0)
+            *width = ft_strlen(line);
+        (*height)++;
+        free(line);
+        line = NULL; // Reset line to NULL for the next iteration
+    }
+    close(fd);
+
+    // Allocate memory for the map
+    map = (char **)malloc(sizeof(char *) * (*height + 1));
+    if (!map)
+        handle_error("Failed to allocate memory\n", NULL, NULL);
+
+    // Reopen file to populate map
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        handle_error("Failed to open file\n", map, NULL);
+
+    i = 0;
+    while (i < *height)
+    {
+        get_next_valid_line(fd, &line);
+        map[i] = ft_strdup(line);
+        if (!map[i])
+        {
+            free_split(map); // Clean up allocated rows
+            handle_error("Failed to allocate memory for map\n", NULL, line);
+        }
+        free(line);
+        line = NULL; // Reset line to NULL for the next iteration
+        i++;
+    }
+	map[i] = NULL; // Null-terminate the map array
+    close(fd);
+    return (map);
 }
 
 int32_t	main(int argc, char **argv)
 {
 	t_game	game;
 	int		i;
+	int		j;
 
 	if (argc != 2)
 		handle_error("Usage: ./so_long [map.ber]\n", NULL, NULL);
@@ -113,9 +119,16 @@ int32_t	main(int argc, char **argv)
 	i = 0;
 	while (i < game.height)
 	{
-		printf("%s\n", game.map[i]);
+		j = 0;
+		while (game.map[i][j])
+		{
+			printf("bytes[%d]: %ld byte(s)\n", j, sizeof(game.map[i][j]));
+			j++;
+		}
+		printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
 		i++;
 	}
+	printf("line: %s\nsize of line#:%ld bytes\n", game.map[i], sizeof(game.map[i]));
 	free_split(game.map); // Free map array
 	return (0);
 }
