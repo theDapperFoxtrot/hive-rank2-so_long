@@ -96,7 +96,16 @@ static char **read_map(char *filename, int *width, int *height)
     return (map);
 }
 
-int32_t	main(int argc, char **argv)
+void	validate_map(char **map, int width, int height)
+{
+	char *current_line;
+	char *next_line;
+
+	if (height < 4 || width < 4)
+		handle_error("Map is too small\n", map, NULL);
+}
+
+int	main(int argc, char **argv)
 {
 	t_game	game;
 	// int		i;
@@ -106,6 +115,7 @@ int32_t	main(int argc, char **argv)
 		handle_error("Usage: ./so_long [map.ber]\n", NULL, NULL);
 	// Read the map
 	game.map = read_map(argv[1], &game.width, &game.height);
+	validate_map(game.map, game.width, game.height);
 	// i = 0;
 	// while (i < game.height)
 	// {
