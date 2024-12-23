@@ -96,6 +96,37 @@ static char **read_map(char *filename, int *width, int *height)
     return (map);
 }
 
+void	necessary_characters(char **map, int width, int height)
+{
+	int		i;
+	int		j;
+	int		player;
+	int		exit;
+	int		collectible;
+
+	i = 0;
+	player = 0;
+	exit = 0;
+	collectible = 0;
+	while (i < height)
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'P')
+				player++;
+			else if (map[i][j] == 'E')
+				exit++;
+			else if (map[i][j] == 'C')
+				collectible++;
+			j++;
+		}
+		i++;
+	}
+	if (player != 1 || exit != 1 || collectible < 1)
+		handle_error("Map is missing necessary characters\n", map, NULL);
+}
+
 void	validate_map(char **map, int width, int height)
 {
 	char *current_line;
@@ -103,6 +134,17 @@ void	validate_map(char **map, int width, int height)
 
 	if (height < 4 || width < 4)
 		handle_error("Map is too small\n", map, NULL);
+	while (*map)
+	{
+		current_line = *map;
+		next_line = *(map + 1);
+		if (next_line == NULL)
+			break ;
+		if (ft_strlen(current_line) != width)
+			handle_error("Map is not rectangular\n", map, NULL);
+		map++;
+	}
+	necessary_characters(map, width, height);
 }
 
 int	main(int argc, char **argv)
