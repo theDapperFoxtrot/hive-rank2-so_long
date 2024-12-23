@@ -9,8 +9,6 @@ static void	handle_error(t_game *game, char *message, char **freedom_seekers, ch
 		free(freedom_seeker);
 	if (freedom_seekers)
 		free_split(freedom_seekers);
-	if (game->map)
-		free_split(game->map);
 	free(game);
 	ft_putstr_fd(message, 2);
 	exit(1);
