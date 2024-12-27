@@ -43,6 +43,8 @@ typedef struct  s_game
 	int			collectables;
 	int			exit_x;
 	int			exit_y;
+	int			player_x;
+	int			player_y;
 }				t_game;
 
 #endif
