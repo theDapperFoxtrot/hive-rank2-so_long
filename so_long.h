@@ -11,6 +11,9 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define BUFFER_SIZE 32
+# define PIXELS 48
+
+# define WALL "assets/tree_wall.png"
 
 typedef struct s_data
 {
@@ -33,11 +36,16 @@ typedef struct s_player
 	int		player_direction;
 }			t_player;
 
+typedef struct s_texture
+{
+	mlx_image_t	*wall;
+}				t_texture;
+
 typedef struct s_game
 {
 	char		**map;
-	mlx_t		*mlx;
-	mlx_image_t	*image;
+	mlx_t		*interface;
+	t_texture	texture;
 	int			width;
 	int			height;
 	int			collectables;
@@ -47,7 +55,6 @@ typedef struct s_game
 	int			player_y;
 }				t_game;
 
-void	start_interface(t_game *game, mlx_t **interface);
 void	handle_error(t_game *game, char *message, \
 char **freedom_seekers, char *freedom_seeker);
 void	init_values(t_game *game);
@@ -69,4 +76,9 @@ char	**create_temp_map(t_game *game);
 int		flood_fill(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y);
 
+// image functions
+void		start_interface(t_game *game);
+void		fill_background(t_game *game);
+void		load_textures(t_game *game);
+void		load_wall_texture(t_game *game);
 #endif

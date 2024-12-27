@@ -2,7 +2,7 @@ NAME = so_long
 LIBMLX = ./MLX42
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = error.c get_next_valid_line.c init_game_values.c is_playable.c main_so_long.c necessary_characters.c read_map.c validate_map.c
+SRC = error.c get_next_valid_line.c init_game_values.c is_playable.c main_so_long.c necessary_characters.c read_map.c validate_map.c load_textures.c
 OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a
 HEADERS	= -I $(LIBMLX)/include
