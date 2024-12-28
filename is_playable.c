@@ -2,7 +2,6 @@
 
 int	is_playable(t_game *game, t_player *player, t_data *data)
 {
-	int		i;
 	int		result;
 	char	**temp;
 
@@ -18,10 +17,7 @@ int	is_playable(t_game *game, t_player *player, t_data *data)
 		free_split(temp);
 		handle_error(game, "No valid path available\n", game->map, NULL);
 	}
-	i = 0;
-	while (i < game->height)
-		free(temp[i++]);
-	free(temp);
+	free_split(temp);
 	return (result);
 }
 

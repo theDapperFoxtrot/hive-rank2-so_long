@@ -22,5 +22,5 @@ void	load_textures(t_game *game)
 	game->image.floor = load_image(game, FLOOR);
 	game->image.player = load_image(game, PLAYER);
 	game->image.collectible = load_image(game, COLLECTIBLE);
-	game->image.exit = load_image(game, WALL);
+	game->image.exit = load_image(game, EXIT);
 }

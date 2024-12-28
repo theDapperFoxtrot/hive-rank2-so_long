@@ -18,10 +18,12 @@ char **line, char *buffer)
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, 1);
+		if (bytes_read < 1)
+			break ;
 		buffer[1] = '\0';
 		if (buffer[0] == '\n' || buffer[0] == '\0')
 			break ;
-		if (buffer[0] == 32 || (buffer[0] > 9 && buffer[0] < 13))
+		if (buffer[0] == 32 || buffer[0] == 9 || (buffer[0] > 11 && buffer[0] < 13))
 			continue ;
 		if (!valid_character(buffer[0]))
 		{
