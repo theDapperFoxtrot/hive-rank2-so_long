@@ -3,8 +3,6 @@
 void	init_values(t_game *game)
 {
 	game->map = NULL;
-	game->mlx = NULL;
-	game->image = NULL;
 	game->width = 0;
 	game->height = 0;
 	game->collectables = 0;

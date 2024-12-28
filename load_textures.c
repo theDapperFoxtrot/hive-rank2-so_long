@@ -1,22 +1,22 @@
-#include "so_long.h"
+// #include "so_long.h"
 
-mlx_image_t	*load_image(t_game *game, const char *path)
-{
-	mlx_texture_t	*texture;
-	mlx_image_t		*image;
+// mlx_image_t	*load_image(t_game *game, const char *path)
+// {
+// 	mlx_texture_t	*texture;
+// 	mlx_image_t		*image;
 
-	image = NULL;
-	texture = mlx_load_png(path);
-	if (!texture)
-		handle_error(game, "Failed to load texture\n", NULL, NULL);
-	image = mlx_texture_to_image(game->interface, texture);
-	if (!image)
-		handle_error(game, "Failed to convert texture to image\n", NULL, NULL);
-	mlx_delete_texture(texture);
-	return (image);
-}
+// 	image = NULL;
+// 	texture = mlx_load_png(path);
+// 	if (!texture)
+// 		handle_error(game, "Failed to load texture\n", NULL, NULL);
+// 	image = mlx_texture_to_image(game->interface, texture);
+// 	if (!image)
+// 		handle_error(game, "Failed to convert texture to image\n", NULL, NULL);
+// 	mlx_delete_texture(texture);
+// 	return (image);
+// }
 
-void	load_textures(t_game *game)
-{
-	game->texture.wall = load_image(game, WALL);
-}
+// void	load_textures(t_game *game)
+// {
+// 	game->texture.wall = load_image(game, WALL);
+// }

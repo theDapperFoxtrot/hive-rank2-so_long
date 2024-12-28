@@ -14,6 +14,10 @@
 # define PIXELS 48
 
 # define WALL "assets/tree_wall.png"
+# define FLOOR "assets/autumn_floor.png"
+# define COLLECTIBLE "assets/water_bottle_collectible.png"
+# define PLAYER "assets/dapper_player.png"
+# define EXIT "assets/return_exit.png"
 
 typedef struct s_data
 {
@@ -38,14 +42,28 @@ typedef struct s_player
 
 typedef struct s_texture
 {
-	mlx_image_t	*wall;
+	mlx_texture_t	*wall;
+	mlx_texture_t	*floor;
+	mlx_texture_t	*player;
+	mlx_texture_t	*collectible;
+	mlx_texture_t	*exit;
 }				t_texture;
+
+typedef struct s_image
+{
+	mlx_image_t	*wall;
+	mlx_image_t	*floor;
+	mlx_image_t	*player;
+	mlx_image_t	*collectible;
+	mlx_image_t	*exit;
+}				t_image;
 
 typedef struct s_game
 {
 	char		**map;
 	mlx_t		*interface;
 	t_texture	texture;
+	t_image		image;
 	int			width;
 	int			height;
 	int			collectables;
@@ -78,7 +96,7 @@ char **temp_map, int temp_map_x, int temp_map_y);
 
 // image functions
 void		start_interface(t_game *game);
-void		fill_background(t_game *game);
-void		load_textures(t_game *game);
-void		load_wall_texture(t_game *game);
+// void		fill_background(t_game *game);
+// void		load_textures(t_game *game);
+// void		load_wall_texture(t_game *game);
 #endif
