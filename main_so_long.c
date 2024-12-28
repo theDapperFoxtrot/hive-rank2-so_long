@@ -1,50 +1,5 @@
 #include "so_long.h"
 
-int	flood_fill_textures(t_game *game, \
-char **temp_map, int temp_map_x, int temp_map_y)
-{
-	static int	collectables = 0;
-	static int	exit_found = 0;
-
-	if (temp_map[temp_map_y][temp_map_x] == 'V')
-		return (0);
-	else if (temp_map[temp_map_y][temp_map_x] == '1')
-	{
-		if (mlx_image_to_window(game->interface, game->image.wall, temp_map_x * PIXELS, temp_map_y * PIXELS) < 0)
-			handle_error(game, "Failed to put game->image.wall to interface\n", NULL, NULL);
-	}
-	else if (temp_map[temp_map_y][temp_map_x] == 'P')
-	{
-		if (mlx_image_to_window(game->interface, game->image.player, temp_map_x * PIXELS, temp_map_y * PIXELS) < 0)
-			handle_error(game, "Failed to put game->image.player to interface\n", NULL, NULL);
-	}
-	else if (temp_map[temp_map_y][temp_map_x] == 'C')
-	{
-		if (mlx_image_to_window(game->interface, game->image.collectible, temp_map_x * PIXELS, temp_map_y * PIXELS) < 0)
-			handle_error(game, "Failed to put game->image.collectible to interface\n", NULL, NULL);
-		collectables++;
-	}
-	else if (temp_map[temp_map_y][temp_map_x] == 'E')
-	{
-		if (mlx_image_to_window(game->interface, game->image.exit, temp_map_x * PIXELS, temp_map_y * PIXELS) < 0)
-			handle_error(game, "Failed to put game->image.exit to interface\n", NULL, NULL);
-		exit_found = 1;
-	}
-	temp_map[temp_map_y][temp_map_x] = 'V';
-	// Check bounds before recursive calls
-	if (temp_map_x + 1 < game->width)
-		flood_fill_textures(game, temp_map, temp_map_x + 1, temp_map_y);
-	if (temp_map_x - 1 >= 0)
-		flood_fill_textures(game, temp_map, temp_map_x - 1, temp_map_y);
-	if (temp_map_y + 1 < game->height)
-		flood_fill_textures(game, temp_map, temp_map_x, temp_map_y + 1);
-	if (temp_map_y - 1 >= 0)
-		flood_fill_textures(game, temp_map, temp_map_x, temp_map_y - 1);
-	if (collectables == game->collectables && exit_found)
-		return (1);
-	return (0);
-}
-
 void	start_interface(t_game *game, t_data *data)
 {
 	mlx_t	*interface;
@@ -52,7 +7,7 @@ void	start_interface(t_game *game, t_data *data)
 	int y;
 	char	**temp;
 
-	interface = mlx_init(WIDTH, HEIGHT, "so_long", true);
+	interface = mlx_init(WIDTH, HEIGHT, "Recycling Simulator", true);
 	if (!interface)
 		handle_error(game, "Failed to initialize interface\n", NULL, NULL);
 	game->interface = interface;
@@ -86,7 +41,7 @@ int	main(int argc, char **argv)
 	t_player	player;
 	t_data		data;
 
-
+// DOUBLE CHECK CORRECT FILE FORMAT ".ber"
 	game = (t_game *)malloc(sizeof(t_game));
 	if (argc != 2)
 		handle_error(game, "Usage: ./so_long [map.ber]\n", NULL, NULL);

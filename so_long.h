@@ -8,8 +8,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1280
+# define HEIGHT 900
 # define BUFFER_SIZE 32
 # define PIXELS 48
 
@@ -98,4 +98,10 @@ char **temp_map, int temp_map_x, int temp_map_y);
 void		start_interface(t_game *game, t_data *data);
 void		load_textures(t_game *game);
 mlx_image_t	*load_image(t_game *game, const char *path);
+int	flood_fill_textures(t_game *game, \
+char **temp_map, int temp_map_x, int temp_map_y);
+void	apply_texture(t_game *game, mlx_image_t *texture, int x, int y);
+void	recall_flood_fill_textures(t_game *game, \
+char **temp_map, int temp_map_x, int temp_map_y);
+
 #endif
