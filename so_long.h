@@ -95,8 +95,8 @@ int		flood_fill(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y);
 
 // image functions
-void		start_interface(t_game *game);
+void		start_interface(t_game *game/*, t_data *data*/);
 // void		fill_background(t_game *game);
-// void		load_textures(t_game *game);
-// void		load_wall_texture(t_game *game);
+void		load_textures(t_game *game);
+mlx_image_t	*load_image(t_game *game, const char *path);
 #endif
