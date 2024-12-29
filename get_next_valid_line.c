@@ -28,7 +28,7 @@ char **line, char *buffer)
 		if (!valid_character(buffer[0]))
 		{
 			free(buffer);
-			handle_error(game, "Invalid character in map\n", NULL, *line);
+			handle_error(game, "Error\nInvalid character in map\n", NULL, *line);
 		}
 		temp = ft_strjoin(*line, buffer);
 		free(*line);
@@ -43,7 +43,7 @@ void	*get_next_valid_line(t_game *game, int fd, char **line)
 
 	buffer = (char *)malloc(2);
 	if (!buffer)
-		handle_error(game, "Failed to allocate buffer memory\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to allocate buffer memory\n", NULL, NULL);
 	read_and_process_buffer(game, fd, line, buffer);
 	free(buffer);
 	return (*line);

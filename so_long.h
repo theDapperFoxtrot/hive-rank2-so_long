@@ -73,6 +73,7 @@ typedef struct s_game
 	int			player_y;
 }				t_game;
 
+void	initial_checks(t_game **game, t_data *data);
 void	handle_error(t_game *game, char *message, \
 char **freedom_seekers, char *freedom_seeker);
 void	init_values(t_game *game);

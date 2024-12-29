@@ -8,13 +8,13 @@ void	validate_map(t_game *game, t_player *player, t_data *data)
 
 	i = 0;
 	if (game->height < 4 || game->width < 4)
-		handle_error(game, "Map is too small\n", game->map, NULL);
+		handle_error(game, "Error\nMap is too small\n", game->map, NULL);
 	while (game->map[i])
 	{
 		current_line = game->map[i];
 		next_line = (game->map[i + 1]);
 		if ((int) ft_strlen(current_line) != game->width)
-			handle_error(game, "Map is not rectangular\n", game->map, NULL);
+			handle_error(game, "Error\nMap is not rectangular\n", game->map, NULL);
 		if (next_line == NULL)
 			break ;
 		i++;

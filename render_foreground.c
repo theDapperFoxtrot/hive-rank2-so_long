@@ -15,7 +15,7 @@ char **temp_map, int temp_map_x, int temp_map_y)
 void	apply_texture(t_game *game, mlx_image_t *texture, int x, int y)
 {
 	if (mlx_image_to_window(game->interface, texture, x, y) < 0)
-		handle_error(game, "Failed to put texture to interface\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to put texture to interface\n", NULL, NULL);
 }
 
 int	flood_fill_textures(t_game *game, \

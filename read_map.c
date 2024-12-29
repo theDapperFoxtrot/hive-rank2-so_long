@@ -8,15 +8,15 @@ void	read_map(char *filename, t_game *game)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		handle_error(game, "Failed to open file\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to open file\n", NULL, NULL);
 	get_map_width_height(game, fd, &line);
 	close(fd);
 	map = (char **)malloc(sizeof(char *) * (game->height + 1));
 	if (!map)
-		handle_error(game, "Failed to allocate memory\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to allocate memory\n", NULL, NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		handle_error(game, "Failed to open file\n", map, NULL);
+		handle_error(game, "Error\nFailed to open file\n", map, NULL);
 	generate_map(game, fd, map, &line);
 }
 

@@ -10,12 +10,12 @@ int	is_playable(t_game *game, t_player *player, t_data *data)
 	game->collectables = data->collectibles_count;
 	temp = create_temp_map(game);
 	if (!temp)
-		handle_error(game, "Memory allocation failed", NULL, NULL);
+		handle_error(game, "Error\nMemory allocation failed", NULL, NULL);
 	result = flood_fill(game, temp, data->temp_map_x, data->temp_map_y);
 	if (!result)
 	{
 		free_split(temp);
-		handle_error(game, "No valid path available\n", game->map, NULL);
+		handle_error(game, "Error\nNo valid path available\n", game->map, NULL);
 	}
 	free_split(temp);
 	return (result);
