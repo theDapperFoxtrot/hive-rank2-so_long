@@ -41,10 +41,11 @@ int	main(int argc, char **argv)
 	t_player	player;
 	t_data		data;
 
-// DOUBLE CHECK CORRECT FILE FORMAT ".ber"
 	game = (t_game *)malloc(sizeof(t_game));
 	if (argc != 2)
 		handle_error(game, "Usage: ./so_long [map.ber]\n", NULL, NULL);
+	if (ft_strncmp(ft_strrchr(argv[1], '.'), ".ber", 4) != 0)
+		handle_error(game, "Invalid file format\n", NULL, NULL);
 	if (!game)
 		handle_error(game, "Failed to allocate memory\n", NULL, NULL);
 	init_values(game);
