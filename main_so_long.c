@@ -33,9 +33,10 @@ void	start_interface(t_game *game, t_data *data)
 {
 	mlx_t	*interface;
 
-	interface = mlx_init(WIDTH, HEIGHT, "Recycling Simulator", true);
+	interface = mlx_init(game->width * PIXELS, game->height * PIXELS, "Recycling Simulator", true);
 	if (!interface)
 		handle_error(game, "Error\nFailed to initialize interface\n", NULL, NULL);
+	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	game->interface = interface;
 	load_textures(game);
 	render_background(game);

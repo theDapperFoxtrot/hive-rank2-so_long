@@ -8,9 +8,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-# define WIDTH 1280
-# define HEIGHT 900
-# define BUFFER_SIZE 32
+# define SCREEN_MAX_WIDTH 3840
+# define SCREEN_MAX_HEIGHT 2160
 # define PIXELS 48
 
 # define WALL "assets/tree_wall.png"
