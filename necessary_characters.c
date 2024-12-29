@@ -1,7 +1,7 @@
 #include "so_long.h"
 
 void	loop_loop_necessary_characters(t_game *game, \
-t_player *player, t_data *data, int i)
+t_data *data, int i)
 {
 	int	j;
 
@@ -10,8 +10,8 @@ t_player *player, t_data *data, int i)
 	{
 		if (game->map[i][j] == 'P')
 		{
-			player->player_x = j;
-			player->player_y = i;
+			game->player_x = j;
+			game->player_y = i;
 			data->player_count++;
 		}
 		else if (game->map[i][j] == 'E')
@@ -26,24 +26,24 @@ t_player *player, t_data *data, int i)
 	}
 }
 
-void	loop_necessary_characters(t_game *game, t_player *player, t_data *data)
+void	loop_necessary_characters(t_game *game, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < game->height)
 	{
-		loop_loop_necessary_characters(game, player, data, i);
+		loop_loop_necessary_characters(game, data, i);
 		i++;
 	}
 }
 
-void	necessary_characters(t_game *game, t_player *player, t_data *data)
+void	necessary_characters(t_game *game, t_data *data)
 {
 	data->player_count = 0;
 	data->exit_count = 0;
 	data->collectibles_count = 0;
-	loop_necessary_characters(game, player, data);
+	loop_necessary_characters(game, data);
 	if (data->player_count != 1 || \
 	data->exit_count != 1 || data->collectibles_count < 1)
 		handle_error(game, \

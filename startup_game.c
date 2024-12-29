@@ -1,5 +1,22 @@
 #include "so_long.h"
 
+void	start_interface(t_game *game, t_data *data)
+{
+	mlx_t	*interface;
+
+	interface = mlx_init(game->width * PIXELS, game->height * PIXELS, "Recycling Simulator", true);
+	if (!interface)
+		handle_error(game, "Error\nFailed to initialize interface\n", NULL, NULL);
+	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
+	game->interface = interface;
+	load_textures(game);
+	render_background(game);
+	render_foreground(game, data);
+	mlx_key_hook(game->interface, &key_hooks, game);
+	mlx_loop(game->interface);
+	mlx_terminate(game->interface);
+}
+
 void	recall_flood_fill_textures(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y)
 {
@@ -15,7 +32,10 @@ char **temp_map, int temp_map_x, int temp_map_y)
 void	apply_texture(t_game *game, mlx_image_t *texture, int x, int y)
 {
 	if (mlx_image_to_window(game->interface, texture, x, y) < 0)
-		handle_error(game, "Error\nFailed to put texture to interface\n", NULL, NULL);
+	{
+		mlx_terminate(game->interface);
+		handle_error(game, "Error\nFailed to render foreground\n", NULL, NULL);
+	}
 }
 
 int	flood_fill_textures(t_game *game, \
@@ -38,4 +58,37 @@ char **temp_map, int temp_map_x, int temp_map_y)
 	if (temp_map_x >= game->width && temp_map_y >= game->height)
 		return (1);
 	return (0);
+}
+
+void	render_background(t_game *game)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (x < SCREEN_MAX_WIDTH / PIXELS)
+	{
+		y = 0;
+		while (y < SCREEN_MAX_HEIGHT / PIXELS)
+		{
+			if (mlx_image_to_window(game->interface, game->image.floor, x * PIXELS, y * PIXELS) < 0)
+			{
+				mlx_terminate(game->interface);
+				handle_error(game, "Error\nFailed to render background\n", NULL, NULL);
+			}
+			y++;
+		}
+		x++;
+	}
+}
+
+void	render_foreground(t_game *game, t_data *data)
+{
+	char	**temp;
+
+	data->temp_map_x = game->player_x;
+	data->temp_map_y = game->player_y;
+	temp = create_temp_map(game);
+	flood_fill_textures(game, temp, data->temp_map_x, data->temp_map_y);
+	free_split(temp);
 }

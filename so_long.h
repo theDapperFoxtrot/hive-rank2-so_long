@@ -31,14 +31,6 @@ typedef struct s_data
 	int		collectibles_count;
 }			t_data;
 
-typedef struct s_player
-{
-	int		player_x;
-	int		player_y;
-	int		player_steps;
-	int		player_direction;
-}			t_player;
-
 typedef struct s_texture
 {
 	mlx_texture_t	*wall;
@@ -65,11 +57,15 @@ typedef struct s_game
 	t_image		image;
 	int			width;
 	int			height;
-	int			collectables;
+	int			collectibles;
 	int			exit_x;
 	int			exit_y;
 	int			player_x;
 	int			player_y;
+	int			score;
+	int			steps;
+	int			over;
+	int			bottles_returned;
 }				t_game;
 
 void	initial_checks(t_game **game, t_data *data);
@@ -83,13 +79,13 @@ int		read_and_process_buffer(t_game *game, int fd, \
 char **line, char *buffer);
 int		valid_character(char c);
 void	generate_map(t_game *game, int fd, char **map, char **line);
-void	validate_map(t_game *game, t_player *player, t_data *data);
-void	necessary_characters(t_game *game, t_player *player, t_data *data);
-void	loop_necessary_characters(t_game *game, t_player *player, t_data *data);
+void	validate_map(t_game *game, t_data *data);
+void	necessary_characters(t_game *game, t_data *data);
+void	loop_necessary_characters(t_game *game, t_data *data);
 void	loop_loop_necessary_characters(t_game *game, \
-t_player *player, t_data *data, int i);
+t_data *data, int i);
 void	check_walls(t_game *game);
-int		is_playable(t_game *game, t_player *player, t_data *data);
+int		is_playable(t_game *game, t_data *data);
 char	**create_temp_map(t_game *game);
 int		flood_fill(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y);
@@ -98,10 +94,19 @@ char **temp_map, int temp_map_x, int temp_map_y);
 void		start_interface(t_game *game, t_data *data);
 void		load_textures(t_game *game);
 mlx_image_t	*load_image(t_game *game, const char *path);
+void	render_background(t_game *game);
+void	render_foreground(t_game *game, t_data *data);
 int	flood_fill_textures(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y);
 void	apply_texture(t_game *game, mlx_image_t *texture, int x, int y);
 void	recall_flood_fill_textures(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y);
+
+// gameplay functions
+void	key_hooks(mlx_key_data_t data, void *param);
+void	move_player(t_game *game, int x, int y);
+void	game_over_check(t_game *game);
+void	collect_trash(t_game *game, int x, int y);
+void	reapply_textures_count_steps(t_game *game, int x, int y);
 
 #endif

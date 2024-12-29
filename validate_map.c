@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	validate_map(t_game *game, t_player *player, t_data *data)
+void	validate_map(t_game *game, t_data *data)
 {
 	char	*current_line;
 	char	*next_line;
@@ -9,6 +9,8 @@ void	validate_map(t_game *game, t_player *player, t_data *data)
 	i = 0;
 	if (game->height < 4 || game->width < 4)
 		handle_error(game, "Error\nMap is too small\n", game->map, NULL);
+	if (game->height > 45 || game->width > 80)
+		handle_error(game, "Error\nMap is too big\n", game->map, NULL);
 	while (game->map[i])
 	{
 		current_line = game->map[i];
@@ -19,9 +21,9 @@ void	validate_map(t_game *game, t_player *player, t_data *data)
 			break ;
 		i++;
 	}
-	necessary_characters(game, player, data);
+	necessary_characters(game, data);
 	check_walls(game);
-	is_playable(game, player, data);
+	is_playable(game, data);
 }
 void	check_walls(t_game *game)
 {
