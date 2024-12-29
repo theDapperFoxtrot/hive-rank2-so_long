@@ -16,7 +16,8 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	if (!image)
 	{
 		mlx_terminate(game->interface);
-		handle_error(game, "Error\nFailed to convert texture to image\n", NULL, NULL);
+		handle_error(game, \
+		"Error\nFailed to convert texture to image\n", NULL, NULL);
 	}
 	mlx_delete_texture(texture);
 	return (image);

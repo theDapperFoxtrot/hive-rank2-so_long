@@ -2,11 +2,16 @@
 
 void	reapply_textures_count_steps(t_game *game, int x, int y)
 {
+	int		px;
+	int		py;
+
+	px = game->player_x;
+	py = game->player_y;
 	if (game->map[y][x] == 'E')
 		return ;
-	game->map[game->player_y][game->player_x] = '0';
+	game->map[py][px] = '0';
 	game->map[y][x] = 'P';
-	apply_texture(game, game->image.floor, game->player_x * PIXELS, game->player_y * PIXELS);
+	apply_texture(game, game->image.floor, px * PIXELS, py * PIXELS);
 	apply_texture(game, game->image.player, x * PIXELS, y * PIXELS);
 	if (!game->bottles_returned)
 	{
@@ -38,8 +43,8 @@ void	collect_trash(t_game *game, int x, int y)
 
 void	game_over_check(t_game *game)
 {
-		if (game->over)
-		{
+	if (game->over)
+	{
 		ft_putstr_fd("\n\n🏆 You did it!\n", 1);
 		ft_putstr_fd("👛 You earned: ", 1);
 		ft_putstr_fd(ft_itoa(15 * game->collectibles), 1);
@@ -47,9 +52,10 @@ void	game_over_check(t_game *game)
 		ft_putstr_fd("🙏 Thanks for playing!\n", 1);
 		ft_putstr_fd("Press the ESC key to exit...", 1);
 		game->bottles_returned = 1;
-		}
-		else
-			ft_putstr_fd("You're just going to leave trash on the ground??? 💰\n\n", 1);
+	}
+	else
+		ft_putstr_fd(\
+		"You're just going to leave trash on the ground? 💰\n\n", 1);
 }
 
 void	move_player(t_game *game, int x, int y)
@@ -73,7 +79,6 @@ void	move_player(t_game *game, int x, int y)
 	game->player_y = y;
 	game->steps++;
 }
-
 
 void	key_hooks(mlx_key_data_t data, void *param)
 {

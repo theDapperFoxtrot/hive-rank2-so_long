@@ -18,8 +18,6 @@ $(NAME): $(OBJ)
 	git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX) && touch .libmlx_cloned
 	cmake $(LIBMLX) -B $(LIBMLX)/build && cmake --build $(LIBMLX)/build -j4
 
-#libmlx: .libmlx_cloned
-
 clean:
 	$(MAKE) -C libft clean
 	rm -f $(OBJ)

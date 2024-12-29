@@ -15,6 +15,7 @@ void	init_values(t_game *game)
 	game->over = 0;
 	game->bottles_returned = 0;
 }
+
 void	initial_checks(t_game **game, t_data *data)
 {
 	*game = (t_game *)malloc(sizeof(t_game));

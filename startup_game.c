@@ -1,22 +1,5 @@
 #include "so_long.h"
 
-void	start_interface(t_game *game, t_data *data)
-{
-	mlx_t	*interface;
-
-	interface = mlx_init(game->width * PIXELS, game->height * PIXELS, "Recycling Simulator", true);
-	if (!interface)
-		handle_error(game, "Error\nFailed to initialize interface\n", NULL, NULL);
-	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-	game->interface = interface;
-	load_textures(game);
-	render_background(game);
-	render_foreground(game, data);
-	mlx_key_hook(game->interface, &key_hooks, game);
-	mlx_loop(game->interface);
-	mlx_terminate(game->interface);
-}
-
 void	recall_flood_fill_textures(t_game *game, \
 char **temp_map, int temp_map_x, int temp_map_y)
 {
@@ -29,12 +12,13 @@ char **temp_map, int temp_map_x, int temp_map_y)
 	if (temp_map_y - 1 >= 0)
 		flood_fill_textures(game, temp_map, temp_map_x, temp_map_y - 1);
 }
+
 void	apply_texture(t_game *game, mlx_image_t *texture, int x, int y)
 {
 	if (mlx_image_to_window(game->interface, texture, x, y) < 0)
 	{
 		mlx_terminate(game->interface);
-		handle_error(game, "Error\nFailed to render foreground\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to render image\n", NULL, NULL);
 	}
 }
 
@@ -44,15 +28,20 @@ char **temp_map, int temp_map_x, int temp_map_y)
 	if (temp_map[temp_map_y][temp_map_x] == 'V')
 		return (0);
 	else if (temp_map[temp_map_y][temp_map_x] == '1')
-		apply_texture(game, game->image.wall, temp_map_x * PIXELS, temp_map_y * PIXELS);
+		apply_texture(game, game->image.wall, \
+		temp_map_x * PIXELS, temp_map_y * PIXELS);
 	else if (temp_map[temp_map_y][temp_map_x] == 'P')
-		apply_texture(game, game->image.player, temp_map_x * PIXELS, temp_map_y * PIXELS);
+		apply_texture(game, game->image.player, \
+		temp_map_x * PIXELS, temp_map_y * PIXELS);
 	else if (temp_map[temp_map_y][temp_map_x] == 'C')
-		apply_texture(game, game->image.collectible, temp_map_x * PIXELS, temp_map_y * PIXELS);
+		apply_texture(game, game->image.collectible, \
+		temp_map_x * PIXELS, temp_map_y * PIXELS);
 	else if (temp_map[temp_map_y][temp_map_x] == 'E')
-		apply_texture(game, game->image.exit, temp_map_x * PIXELS, temp_map_y * PIXELS);
+		apply_texture(game, game->image.exit, \
+		temp_map_x * PIXELS, temp_map_y * PIXELS);
 	else
-		apply_texture(game, game->image.floor, temp_map_x * PIXELS, temp_map_y * PIXELS);
+		apply_texture(game, game->image.floor, \
+		temp_map_x * PIXELS, temp_map_y * PIXELS);
 	temp_map[temp_map_y][temp_map_x] = 'V';
 	recall_flood_fill_textures(game, temp_map, temp_map_x, temp_map_y);
 	if (temp_map_x >= game->width && temp_map_y >= game->height)
@@ -62,8 +51,8 @@ char **temp_map, int temp_map_x, int temp_map_y)
 
 void	render_background(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	while (x < SCREEN_MAX_WIDTH / PIXELS)
@@ -71,10 +60,12 @@ void	render_background(t_game *game)
 		y = 0;
 		while (y < SCREEN_MAX_HEIGHT / PIXELS)
 		{
-			if (mlx_image_to_window(game->interface, game->image.floor, x * PIXELS, y * PIXELS) < 0)
+			if (mlx_image_to_window(game->interface, game->image.floor, \
+			x * PIXELS, y * PIXELS) < 0)
 			{
 				mlx_terminate(game->interface);
-				handle_error(game, "Error\nFailed to render background\n", NULL, NULL);
+				handle_error(game, \
+				"Error\nFailed to render background\n", NULL, NULL);
 			}
 			y++;
 		}
