@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	init_values(game);
 	read_map(argv[1], game);
 	validate_map(game, &data);
-	// start_interface(game, &data);
+	start_interface(game, &data);
 	free_split(game->map);
 	free(game);
 	return (0);
