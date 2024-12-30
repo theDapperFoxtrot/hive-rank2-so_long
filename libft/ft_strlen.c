@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 09:06:26 by smishos           #+#    #+#             */
-/*   Updated: 2024/04/27 15:43:41 by smishos          ###   ########.fr       */
+/*   Updated: 2024/12/30 22:42:21 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	int	length;
 
+	if (!s)
+		return (0);
 	length = 0;
 	while (s[length])
 		length++;

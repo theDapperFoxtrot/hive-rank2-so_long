@@ -51,6 +51,7 @@ typedef struct s_image
 
 typedef struct s_game
 {
+	int			fd;
 	char		**map;
 	mlx_t		*interface;
 	t_texture	texture;

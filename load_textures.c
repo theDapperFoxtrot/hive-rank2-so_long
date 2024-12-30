@@ -10,14 +10,15 @@ mlx_image_t	*load_image(t_game *game, const char *path)
 	if (!texture)
 	{
 		mlx_terminate(game->interface);
-		handle_error(game, "Error\nFailed to load texture\n", NULL, NULL);
+		handle_error(game, "Error\nFailed to load texture\n", game->map, NULL);
 	}
 	image = mlx_texture_to_image(game->interface, texture);
 	if (!image)
 	{
+		mlx_delete_texture(texture);
 		mlx_terminate(game->interface);
 		handle_error(game, \
-		"Error\nFailed to convert texture to image\n", NULL, NULL);
+		"Error\nFailed to convert texture to image\n", game->map, NULL);
 	}
 	mlx_delete_texture(texture);
 	return (image);

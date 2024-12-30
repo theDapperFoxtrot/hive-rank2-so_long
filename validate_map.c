@@ -42,13 +42,13 @@ void	check_walls(t_game *game)
 			{
 				if (game->map[i][j] != '1')
 					handle_error(game, \
-					"Map is not surrounded by walls\n", game->map, NULL);
+					"Error\nMap is not surrounded by walls\n", game->map, NULL);
 			}
 			else if (j == 0 || j == game->width - 1)
 			{
 				if (game->map[i][j] != '1')
 					handle_error(game, \
-					"Map is not surrounded by walls\n", game->map, NULL);
+					"Error\nMap is not surrounded by walls\n", game->map, NULL);
 			}
 			j++;
 		}

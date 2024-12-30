@@ -47,5 +47,5 @@ void	necessary_characters(t_game *game, t_data *data)
 	if (data->player_count != 1 || \
 	data->exit_count != 1 || data->collectibles_count < 1)
 		handle_error(game, \
-		"Necessary characters in your map are incorrect\n", game->map, NULL);
+		"Error\nNecessary characters in your map are incorrect\n", game->map, NULL);
 }

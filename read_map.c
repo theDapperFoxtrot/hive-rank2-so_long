@@ -9,6 +9,7 @@ void	read_map(char *filename, t_game *game)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		handle_error(game, "Error\nFailed to open file\n", NULL, NULL);
+	game->fd = fd;
 	get_map_width_height(game, fd, &line);
 	close(fd);
 	map = (char **)malloc(sizeof(char *) * (game->height + 1));
@@ -17,6 +18,7 @@ void	read_map(char *filename, t_game *game)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		handle_error(game, "Error\nFailed to open file\n", map, NULL);
+	game->fd = fd;
 	generate_map(game, fd, map, &line);
 }
 
@@ -46,12 +48,12 @@ void	generate_map(t_game *game, int fd, char **map, char **line)
 		map[i] = ft_strdup(*line);
 		if (!map[i])
 			handle_error(game, \
-			"Failed to allocate memory for map\n", map, *line);
+			"Error\nFailed to allocate memory for map\n", map, *line);
 		free(*line);
 		*line = NULL;
 		i++;
 	}
 	map[i] = NULL;
-	close(fd);
+	close(game->fd);
 	game->map = map;
 }
