@@ -18,6 +18,6 @@ void	initial_checks(t_game **game, t_data *data)
 		handle_error(*game, "Error\nInvalid file format\n", NULL, NULL);
 	if ((int) ft_strlen(data->argv[1]) < 5)
 		handle_error(*game, "Error\nInvalid map file name\n", NULL, NULL);
-	if (access(data->argv[1], __O_DIRECTORY) == -1)
-		handle_error(*game, "Error\nThis is a directory\n", NULL, NULL);
+	if (access(data->argv[1], F_OK) == -1)
+		handle_error(*game, "Error\nThis is not a file\n", NULL, NULL);
 }
